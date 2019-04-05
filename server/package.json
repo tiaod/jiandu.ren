@@ -7,7 +7,8 @@
     "start": "moleculer-runner",
     "cli": "moleculer connect ",
     "dc:up": "docker-compose up --build -d",
-    "dc:down": "docker-compose down"
+    "dc:down": "docker-compose down",
+    "test": "ava"
   },
   "keywords": [
     "microservices",
@@ -15,6 +16,7 @@
   ],
   "author": "",
   "devDependencies": {
+    "ava": "^1.4.1",
     "moleculer-repl": "^0.5.3"
   },
   "dependencies": {
