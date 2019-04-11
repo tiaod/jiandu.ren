@@ -21,8 +21,10 @@
     "moleculer-repl": "^0.5.3"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "bull": "^3.7.0",
     "dotenv": "^7.0.0",
+    "feedparser": "^2.2.9",
     "moleculer": "^0.13.0",
     "moleculer-bull": "^0.2.4",
     "moleculer-web": "^0.8.0",
