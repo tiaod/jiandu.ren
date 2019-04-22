@@ -2,7 +2,8 @@ import 'dotenv/config'
 import test from 'ava'
 import { ServiceBroker } from 'moleculer'
 import { Job } from 'bull'
-const broker = new ServiceBroker({ logger: false })
+const broker = new ServiceBroker({ logger: true })
+const managerService = broker.loadService('services/manager.service')
 const feedService = broker.loadService('services/feed.service')
 
 test.before(async t=>{
@@ -10,8 +11,8 @@ test.before(async t=>{
 })
 
 test('创建feed', async t=> {
-  let feed = await feedService.actions.create({
-    url: 'https://rsshub.app/wechat/wasi/5b575db858e5c4583338db11'
+  let feed = await managerService.actions.createFeed({
+    url: 'https://www.feedforall.com/sample.xml'
   }, {
     meta: {
       user: {
