@@ -28,7 +28,7 @@ module.exports = {
     createFeed:{
       params: {
         url: 'string',
-        name: {type:'string', optional:true}, //RSS的名字。如果提供这个字段会覆盖默认的
+        title: {type:'string', optional:true}, //RSS的名字。如果提供这个字段会覆盖默认的
         description: {type:'string', optional:true}, //RSS的描述。如果提供这个字段会覆盖默认的
       },
       async handler(ctx){
@@ -49,18 +49,18 @@ module.exports = {
           _id: ctx.params.url,
           type: 'feed',
           owner: ctx.meta.user.name,
-          name: ctx.params.name,
+          title: ctx.params.title,
           description: ctx.params.description,
         }
-        console.log('构造feed', feed)
+
         let stream = await ctx.call('feed.fetch',{
           url:ctx.params.url
         })
-        return await new Promise(async function(resolve, reject) {
+        await new Promise(async function(resolve, reject) {
 
           console.log('成功获取stream：', stream)
           stream.on('meta', meta=>{
-            feed.name = feed.name || meta.name
+            feed.title = feed.title || meta.title
             feed.description = feed.description || meta.description
           })
           stream.on('readable', function () {
@@ -76,6 +76,7 @@ module.exports = {
           stream.on('error', reject)
           stream.on('end', resolve)
         })
+        console.log('成功构造的feed：', feed)
       }
     },
     initdb:{ // 初始化数据库，并且设置数据库的权限以及索引。如果数据库已经存在，则不会进行任何操作。
