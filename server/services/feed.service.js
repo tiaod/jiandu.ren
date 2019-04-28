@@ -41,27 +41,6 @@ module.exports = {
       async handler(ctx){
         let feedparser = await this.fetch(ctx.params.url)
         return feedparser
-        // return new Promise(function(resolve, reject) {
-        //   let count = 0 // 已经获取的数量
-        //   feedparser.on('readable', function () {
-        //     // This is where the action is!
-        //     var stream = this; // `this` is `feedparser`, which is a stream
-        //     var meta = this.meta; // **NOTE** the "meta" is always available in the context of the feedparser instance
-        //     var item;
-        //
-        //     while (item = stream.read()) {
-        //       console.log(item)
-        //
-        //       count++
-        //     }
-        //   })
-        //   feedparser.on('error', function (error) {
-        //     reject(error)
-        //   })
-        //   feedparser.on('end', function(){
-        //     resolve(count)
-        //   })
-        // })
       }
     }
   },
