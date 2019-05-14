@@ -1,5 +1,5 @@
 const nano = require('../nano')
-const nanoid = require('nanoid')
+const uuidv5 = require('uuid/v5')
 const feeds = nano.use('feeds')
 const { MoleculerClientError } = require('moleculer').Errors
 // const feedfetcher = require('./feedfetcher')
@@ -47,8 +47,8 @@ module.exports = {
         }
 
         let feed = {
-          _id: `feed_${nanoid()}`,
-          url: 'ctx.params.url',
+          _id: uuidv5(ctx.params.url, uuidv5.URL),
+          url: ctx.params.url,
           type: 'feed',
           owner: ctx.meta.user.name,
           title: ctx.params.title,
@@ -58,51 +58,25 @@ module.exports = {
         let stream = await ctx.call('feed.fetch',{
           url:ctx.params.url
         })
-<<<<<<< HEAD
         return new Promise((resolve, reject) => {
           stream.on('meta', async meta=>{
             feed.title = feed.title || meta.title //默认的标题
             feed.description = feed.description || meta.description //默认的描述
             console.log('构造的feed:', feed)
             try{
-              await feeds.put(feed)
+              await feeds.insert(feed)
               await this.actions.initdb({ //初始化对应的数据库
                 dbname:`feed-${feed._id}`
               })
               await ctx.call('feed.parse', stream)
               resolve()
             }catch(e){
+              console.error(e)
               reject(e)
             }
           })
           stream.on('error', reject)
         });
-
-
-=======
-
-        // console.log('成功获取stream：', stream)
-        stream.on('meta', meta=>{
-          console.log('成功取得meta:', meta)
-          feed.title = feed.title || meta.title
-          feed.description = feed.description || meta.description
-        })
-        stream.on('readable', function () {
-          // This is where the action is!
-          var stream = this; // `this` is `feedparser`, which is a stream
-          var meta = this.meta; // **NOTE** the "meta" is always available in the context of the feedparser instance
-          var item;
-
-          while (item = stream.read()) {
-            // console.log(item)
-          }
-        })
-        // await new Promise(async function(resolve, reject) {
-        //   stream.on('error', reject)
-        //   stream.on('end', resolve)
-        // })
-        console.log('成功构造的feed：', feed)
->>>>>>> 778912bc2780042fcc5eb2d31b32c8ee5e70b912
       }
     },
     initdb:{ // 初始化数据库，并且设置数据库的权限以及索引。如果数据库已经存在，则不会进行任何操作。
