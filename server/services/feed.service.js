@@ -63,14 +63,12 @@ module.exports = {
     }
   },
   methods: {
-    async fetch(url, params){
+    async fetch(url, params){ //读取rss内容，并且返回feedparser的stream
       let res = await axios.get(url, { params, responseType:'stream' })
       let feedparser = new FeedParser({
         feedurl:url
       })
-
-      res.data.pipe(feedparser)
-      return feedparser
+      return res.data.pipe(feedparser)
     }
   }
 }

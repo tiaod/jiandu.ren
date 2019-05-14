@@ -33,7 +33,7 @@ module.exports = {
         description: {type:'string', optional:true}, //RSS的描述。如果提供这个字段会覆盖默认的
       },
       async handler(ctx){
-        console.log('创建feeed！')
+        console.log('创建feed！')
         if(!ctx.meta.user){
           throw new MoleculerClientError('需要先登录才能进行操作',401,'unauthorized')
         }
@@ -58,6 +58,7 @@ module.exports = {
         let stream = await ctx.call('feed.fetch',{
           url:ctx.params.url
         })
+<<<<<<< HEAD
         return new Promise((resolve, reject) => {
           stream.on('meta', async meta=>{
             feed.title = feed.title || meta.title //默认的标题
@@ -78,6 +79,30 @@ module.exports = {
         });
 
 
+=======
+
+        // console.log('成功获取stream：', stream)
+        stream.on('meta', meta=>{
+          console.log('成功取得meta:', meta)
+          feed.title = feed.title || meta.title
+          feed.description = feed.description || meta.description
+        })
+        stream.on('readable', function () {
+          // This is where the action is!
+          var stream = this; // `this` is `feedparser`, which is a stream
+          var meta = this.meta; // **NOTE** the "meta" is always available in the context of the feedparser instance
+          var item;
+
+          while (item = stream.read()) {
+            // console.log(item)
+          }
+        })
+        // await new Promise(async function(resolve, reject) {
+        //   stream.on('error', reject)
+        //   stream.on('end', resolve)
+        // })
+        console.log('成功构造的feed：', feed)
+>>>>>>> 778912bc2780042fcc5eb2d31b32c8ee5e70b912
       }
     },
     initdb:{ // 初始化数据库，并且设置数据库的权限以及索引。如果数据库已经存在，则不会进行任何操作。
