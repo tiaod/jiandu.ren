@@ -31,7 +31,8 @@
     "moleculer": "^0.13.0",
     "moleculer-bull": "^0.2.4",
     "moleculer-web": "^0.8.0",
-    "nano": "^8.0.1"
+    "nano": "^8.0.1",
+    "nanoid": "^2.0.1"
   },
   "engines": {
     "node": ">= 8.x.x"
