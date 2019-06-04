@@ -54,7 +54,7 @@ module.exports = {
           var item;
 
           while (item = stream.read()) {
-            // console.log(item)
+            console.log(item)
           }
         })
         stream.on('error', reject)

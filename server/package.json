@@ -4,7 +4,7 @@
   "description": "My Moleculer microservices project",
   "scripts": {
     "init": "node init.js",
-    "dev": "moleculer-runner --repl --hot services",
+    "dev": "moleculer-runner --env --repl --hot services",
     "prestart": "npm run init",
     "start": "moleculer-runner",
     "cli": "moleculer connect ",
