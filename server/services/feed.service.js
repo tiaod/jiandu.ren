@@ -68,7 +68,8 @@ module.exports = {
       let feedparser = new FeedParser({
         feedurl:url
       })
-      return res.data.pipe(feedparser)
+      res.data.pipe(feedparser)
+      return feedparser
     }
   }
 }

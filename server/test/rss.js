@@ -12,7 +12,7 @@ test.before(async t=>{
 
 test('创建feed', async t=> {
   let feed = await managerService.actions.createFeed({
-    url: 'https://www.feedforall.com/sample.xml'
+    url: `https://www.feedforall.com/sample.xml?t=${Date.now()}`
   }, {
     meta: {
       user: {
